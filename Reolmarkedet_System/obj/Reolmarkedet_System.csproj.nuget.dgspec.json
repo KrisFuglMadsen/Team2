@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\krist\\OneDrive\\Skrivebord\\datamatiker\\2 Semester\\Reolmarkedet\\RM_System_Code\\Reolmarkedet_System\\Reolmarkedet_System\\Reolmarkedet_System.csproj": {}
+    "C:\\Users\\krist\\OneDrive\\Skrivebord\\Team2\\Reolmarkedet_System\\Reolmarkedet_System.csproj": {}
   },
   "projects": {
-    "C:\\Users\\krist\\OneDrive\\Skrivebord\\datamatiker\\2 Semester\\Reolmarkedet\\RM_System_Code\\Reolmarkedet_System\\Reolmarkedet_System\\Reolmarkedet_System.csproj": {
+    "C:\\Users\\krist\\OneDrive\\Skrivebord\\Team2\\Reolmarkedet_System\\Reolmarkedet_System.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\krist\\OneDrive\\Skrivebord\\datamatiker\\2 Semester\\Reolmarkedet\\RM_System_Code\\Reolmarkedet_System\\Reolmarkedet_System\\Reolmarkedet_System.csproj",
+        "projectUniqueName": "C:\\Users\\krist\\OneDrive\\Skrivebord\\Team2\\Reolmarkedet_System\\Reolmarkedet_System.csproj",
         "projectName": "Reolmarkedet_System",
-        "projectPath": "C:\\Users\\krist\\OneDrive\\Skrivebord\\datamatiker\\2 Semester\\Reolmarkedet\\RM_System_Code\\Reolmarkedet_System\\Reolmarkedet_System\\Reolmarkedet_System.csproj",
+        "projectPath": "C:\\Users\\krist\\OneDrive\\Skrivebord\\Team2\\Reolmarkedet_System\\Reolmarkedet_System.csproj",
         "packagesPath": "C:\\Users\\krist\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\krist\\OneDrive\\Skrivebord\\datamatiker\\2 Semester\\Reolmarkedet\\RM_System_Code\\Reolmarkedet_System\\Reolmarkedet_System\\obj\\",
+        "outputPath": "C:\\Users\\krist\\OneDrive\\Skrivebord\\Team2\\Reolmarkedet_System\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
