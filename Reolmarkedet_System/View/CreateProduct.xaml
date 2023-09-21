@@ -38,13 +38,37 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Opret Vare"
+                <StackPanel VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                    <TextBlock Text="Reollejer: "
                            Foreground="Black"
                            FontSize="10"
                            FontFamily="Segoe ui"
                            Grid.Column="0"
                            VerticalAlignment="Center"
                            Margin="25,0,0,0"/>
+                    
+                    
+                    <ComboBox x:Name="ComboBoxTenantFullname"
+                              Height="25"
+                              Width="150"
+                              Margin="10,0,0,0"                              
+                              Foreground="black"
+                              Loaded="cmboShowTenantFullname"
+                              SelectionChanged="ComboBoxTenantFullname_SelectionChanged"
+                              FontSize="10"
+                              FontFamily="Segoe ui">
+                        
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+
+                    </ComboBox>                       
+                    
+                </StackPanel>
+                
 
                 <Button x:Name="btnMinimize"                        
                         BorderThickness="0"
@@ -124,51 +148,20 @@
                         Grid.Row="1"
                         Width="250">
 
-                    <TextBlock Text="Vare Specifikationer"
+                <TextBlock Text="Opret Vare"
                            Foreground="Black"
                            FontSize="20"
                            FontWeight="Medium"
                            FontFamily="Segoe ui"
                            HorizontalAlignment="Center"/>
-
-                    <TextBlock Text="Reollejer ID: "
+                    
+                <TextBlock Text="Vare Beskrivelse: "
                            Foreground="Black"
                            FontSize="15"
                            FontWeight="Medium"
                            FontFamily="Segoe ui"
                            HorizontalAlignment="Left"
-                           Margin="0,30,0,0"/>
-
-                    <Border BorderThickness="2">
-                        <TextBox x:Name="txtProductTenantID"                                 
-                         FontSize="12"
-                         FontFamily="Segoe ui"
-                         Background="#bdc3c7"
-                         Foreground="Black"
-                         CaretBrush="Transparent"
-                         BorderBrush="Transparent"
-                         BorderThickness="0,0,0,2"
-                         Height="28"
-                         VerticalContentAlignment="Center"
-                         Margin="0,5,0,0"
-                         >
-                        </TextBox>
-
-                        <Border.BorderBrush>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint=" 1,1">
-                                <GradientStop Color="Black" Offset="0"/>
-                                <GradientStop Color="#7f8c8d" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.BorderBrush>
-                    </Border>
-
-                    <TextBlock Text="Vare Beskrivelse: "
-                           Foreground="Black"
-                           FontSize="15"
-                           FontWeight="Medium"
-                           FontFamily="Segoe ui"
-                           HorizontalAlignment="Left"
-                           Margin="0,5,0,0"/>
+                           Margin="0,15,0,0"/>
 
                     <Border BorderThickness="2">
                         <TextBox x:Name="txtProductDescription"
@@ -265,19 +258,22 @@
                            Margin="0,5,0,0"/>
 
                 <Border BorderThickness="2">
-                    <TextBox x:Name="txtProductGroup"
-                         FontSize="12"
-                         FontFamily="Segoe ui"
-                         Background="Transparent"
-                         Foreground="Black"
-                         CaretBrush="Transparent"
-                         BorderBrush="Transparent"
-                         BorderThickness="0,0,0,2"
-                         Height="28"
-                         VerticalContentAlignment="Center"
-                         Margin="0,5,0,0"
-                         >
-                    </TextBox>
+                    <ComboBox x:Name="ComboBoxProductGroup"
+                              Height="25"
+                              Width="250"
+                              Margin="0,0,0,0"                              
+                              Foreground="black"                              
+                              FontSize="10"
+                              FontFamily="Segoe ui"
+                              Loaded="ComboBoxProdutGroup_Loaded">
+                        
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                        
+                    </ComboBox>
 
                     <Border.BorderBrush>
                         <LinearGradientBrush StartPoint="0,0" EndPoint=" 1,1">
@@ -296,19 +292,21 @@
                            Margin="0,5,0,0"/>
                     
                 <Border BorderThickness="2">
-                    <TextBox x:Name="txtProductRackID"                                 
-                         FontSize="12"
-                         FontFamily="Segoe ui"
-                         Background="#bdc3c7"
-                         Foreground="Black"
-                         CaretBrush="Transparent"
-                         BorderBrush="Transparent"
-                         BorderThickness="0,0,0,2"
-                         Height="28"
-                         VerticalContentAlignment="Center"
-                         Margin="0,5,0,0"
-                         >
-                    </TextBox>
+                    <ComboBox x:Name="ComboBoxRack"
+                              Height="25"
+                              Width="250"
+                              Margin="0,0,0,0"                              
+                              Foreground="black"                              
+                              FontSize="10"
+                              FontFamily="Segoe ui">
+
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+
+                    </ComboBox>
 
                     <Border.BorderBrush>
                         <LinearGradientBrush StartPoint="0,0" EndPoint=" 1,1">

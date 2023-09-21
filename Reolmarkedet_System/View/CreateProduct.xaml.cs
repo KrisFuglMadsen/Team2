@@ -13,6 +13,8 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Reolmarkedet_System.ViewModel;
+using Reolmarkedet_System.Model;
 
 namespace Reolmarkedet_System.View
 {
@@ -24,6 +26,7 @@ namespace Reolmarkedet_System.View
         public CreateProduct()
         {
             InitializeComponent();
+            
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e) // Makes the Window dragable from any where in the window.
@@ -31,64 +34,224 @@ namespace Reolmarkedet_System.View
             if (e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
         }
-        private void btnMinimize_Click(object sender, RoutedEventArgs e)
+        private void btnMinimize_Click(object sender, RoutedEventArgs e) // Minimize window without closing the application
         {
             WindowState = WindowState.Minimized;
         }
 
-        private void btnClose_Click(object sender, RoutedEventArgs e)
+        private void btnClose_Click(object sender, RoutedEventArgs e) //Close the application, and makes it stop running in VSC.
         {
             Application.Current.Shutdown();
         }
 
-        private void btnCreateProduct_Click(object sender, RoutedEventArgs e)      {
-           
+        private void btnCreateProduct_Click(object sender, RoutedEventArgs e)
+        {
+            /* Get values for the attributes */
+            Product product = new Product();
+            product.Price = Decimal.Parse(txtProductPrice.Text);
+            product.Description = txtProductDescription.Text;
+            product.Quantity = int.Parse(txtProductQuantity.Text);
+            product.TenantID = GetTenantID(ComboBoxTenantFullname.Text);
+            product.ProductGroupID = GetSelectedProductGroupID();
+            product.RackID = GetSelectedRackID();
+                       
+            /* Call the viewmodel method */
+            ViewModelProduct.insertProduct(product);  
+        } 
 
+        private void cmboShowTenantFullname(object sender, EventArgs e)
+
+        {
+           
+            
+             ComboBoxTenantFullname.ItemsSource = ViewModel.ViewModelTenant.GetTenantFullnameFromModel();
+                    
+        } 
+
+       private int GetTenantID(string tenantFullName)
+        {
             string connectionString = null;
-            string CreateProduct = null;
+            string getTenantIDWhereTenantFullname = null;
 
             connectionString = "Server = (localdb)\\Reolmarkedet; Database=RM_DB";
-            CreateProduct = "insert into PRODUCT ([Price],[Description], [Quantity], [FK1_ProductGroupID], [FK2_TenantID], [FK3_RackID]) values(@Price, @Description, @Quantity, @FK1_ProductGroupID, @FK2_TenantID, @FK3_RackID)";
+            getTenantIDWhereTenantFullname = "SELECT TenantId FROM [TENANT] WHERE CONCAT(FirstName, ' ', LastName) = @TenantFullName";
 
             SqlConnection conn = new SqlConnection(connectionString);
 
-            using(conn)
+            using(conn) 
             {
                 try
                 {
                     conn.Open();
-
-                    using(SqlCommand cmd = new SqlCommand(CreateProduct, conn)) 
+                    using (SqlCommand cmd = new SqlCommand(getTenantIDWhereTenantFullname, conn))
                     {
-                        //Creat and set the parametes values form textbox
+                        cmd.Parameters.AddWithValue("@TenantFullName", tenantFullName);
 
-                        cmd.Parameters.Add("@Price", System.Data.SqlDbType.Decimal).Value = txtProductPrice.Text;
-                        cmd.Parameters.Add("@Description", System.Data.SqlDbType.NVarChar).Value = txtProductDescription.Text;
-                        cmd.Parameters.Add("@Quantity", System.Data.SqlDbType.Int).Value = txtProductQuantity.Text;
-                        cmd.Parameters.Add("@FK1_ProductGroupID", System.Data.SqlDbType.Int).Value = txtProductGroup.Text;
-                        cmd.Parameters.Add("@FK2_TenantID", System.Data.SqlDbType.Int).Value = txtProductTenantID.Text;
-                        cmd.Parameters.Add("@FK3_RackID", System.Data.SqlDbType.Int).Value = txtProductRackID.Text;
-
-                        // Tell the DB to execute the query
-                        int rowsAdded = cmd.ExecuteNonQuery();
-                        if (rowsAdded > 0)
-                            MessageBox.Show("Vare oprettet");
-                        else
-                            MessageBox.Show("Fejl varen blev ikke oprettet, prøv venligst igen");
-                    }                      
-
+                        //Execute the query to get the TenantID
+                        object result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            //Concert the result to an integer
+                            return Convert.ToInt32(result);
+                        }
+                    }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
 
-                    throw;
+                    MessageBox.Show("Error GetTenantID" + ex.Message);
                 }
-            
-
             }
+            return -1;
+            
+        } // for at sikre lagdeling skal denne metode nok også rykkes til Tenant-class eller viewmodel laget ?
 
+        private Dictionary<string, int> GetProductGroupNamesAndIDs()
+        {
+            string connectionString = null;
+            string ShowProductGroupNameAndID = null;
+            Dictionary<string, int> productGroups = new Dictionary<string, int>();
+
+            connectionString = "Server = (localdb)\\Reolmarkedet; Database=RM_DB";
+            ShowProductGroupNameAndID = "SELECT ProductGroupID, ProductGroupName FROM [PRODUCT_GROUP]";
+
+            SqlConnection conn = new SqlConnection(connectionString);
+
+            using (conn)
+            {
+                try
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(ShowProductGroupNameAndID, conn))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int productGroupID = reader.GetInt32(reader.GetOrdinal("ProductGroupID"));
+                                string productGroupName = reader.GetString(reader.GetOrdinal("ProductGroupName"));                               
+                                productGroups.Add(productGroupName, productGroupID);
+                            }
+                        }                        
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Der er sket en fejl:" + ex.Message);
+                }
+            }
+            return productGroups;
+
+        } //for at sikre lagdeling skal denne metode rykkes til ProductGroup-Class
+
+        private Dictionary<string, int> ProductGropDictionary;
+        
+        private void ComboBoxProdutGroup_Loaded(object sender, EventArgs e)
+        {
+            try
+            {
+                //GetProductGroups
+                 ProductGropDictionary = GetProductGroupNamesAndIDs();
+
+                //Set the items source for the ComboBox to Display only hte ProductGroupName
+                 ComboBoxProductGroup.ItemsSource = ProductGropDictionary.Keys.ToList();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Error loading product groups: " + ex.Message);
+            }
             
         }
 
+        private int GetSelectedProductGroupID() 
+        {
+            string selectedProductGroupName = ComboBoxProductGroup.SelectedItem.ToString();
+
+            if (ProductGropDictionary.TryGetValue(selectedProductGroupName, out int productGroupID)) 
+            {
+                return productGroupID;
+            }
+            return -1; //Handle the case where the ProductGroupID is not found - maybe look into return a erro message insted later
+        }
+
+        private void PopulatedRackComboBox(int tenantID)
+        {
+            string connectionString = null;
+            string ShowRackIDAndRackTypeName = null;
+
+            connectionString = "Server=(localdb)\\Reolmarkedet;Database=RM_DB";
+            ShowRackIDAndRackTypeName = "SELECT R.RackID, RT.RackTypeName FROM RACK R " +
+                   "INNER JOIN Rack_Type RT ON R.Fk1_RackTypeID = RT.RackTypeID " +
+                   "WHERE R.Fk2_TenantID = @TenantID";
+            
+            Dictionary<int,string> racks = new Dictionary<int,string>();
+
+            SqlConnection conn = new SqlConnection(connectionString);
+
+            using (conn)
+            {
+                try
+                {
+                    conn.Open();
+                    using(SqlCommand cmd = new SqlCommand(ShowRackIDAndRackTypeName, conn)) 
+                    {
+                        cmd.Parameters.Add("@TenantID",System.Data.SqlDbType.Int).Value = tenantID;
+
+                        using(SqlDataReader reader = cmd.ExecuteReader()) 
+                        {
+                            while (reader.Read()) 
+                            {
+                                int rackID = reader.GetInt32(reader.GetOrdinal("RackID"));
+                                string rackTypeName = reader.GetString(reader.GetOrdinal("RackTypeName"));
+                                racks.Add(rackID, rackTypeName);
+                            }
+                        }
+                    }
+
+                    ComboBoxRack.ItemsSource = racks.Select(kv=>$"{kv.Key}: {kv.Value}").ToList();
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show("Error Populating Rack ComboBox: " + ex.Message);
+                }
+            }
+        }
+
+        private void ComboBoxTenantFullname_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(ComboBoxTenantFullname.SelectedItem != null) 
+            {
+                string selectedTenantName = ComboBoxTenantFullname.SelectedItem.ToString();                
+                int selectedTenantID = GetTenantID(selectedTenantName);
+
+                if (selectedTenantID != -1)
+                {
+                    //populate the Rack ComboBox with data based on the selected tenant's ID
+                    PopulatedRackComboBox(selectedTenantID);
+                }
+            }
+        }
+
+        private int GetSelectedRackID()
+        {
+            if(ComboBoxRack.SelectedItem != null)
+            {
+                string selectedRackItem = ComboBoxRack.SelectedItem.ToString();
+                //Extract the RackID from the selected item
+                int selectedRackID;
+
+                if (int.TryParse(selectedRackItem.Split(':')[0], out selectedRackID))
+                {
+                    return selectedRackID;
+                }
+            }
+            return -1; //handel the case where the selected Rack is not valid later
+        }
+        
+       
     }
-}
+
+ }
+
