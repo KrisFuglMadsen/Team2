@@ -4,11 +4,11 @@
 winexe
 C#
 .cs
-C:\Users\Bright\Source\Repos\KrisFuglMadsen\Team2\Reolmarkedet_System\obj\Debug\net6.0-windows\
+C:\Users\Bright\Source\Repos\KrisFuglMadsen\Team2\Reolmarkedet_System\obj\Release\net6.0-windows\
 Reolmarkedet_System
 none
 false
-TRACE;DEBUG;NET;NET6_0;NETCOREAPP
+TRACE;RELEASE;NET;NET6_0;NETCOREAPP
 C:\Users\Bright\Source\Repos\KrisFuglMadsen\Team2\Reolmarkedet_System\App.xaml
 2343676690
 
