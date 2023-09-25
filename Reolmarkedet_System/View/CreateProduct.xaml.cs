@@ -22,7 +22,9 @@ namespace Reolmarkedet_System.View
     /// Interaction logic for CreateProduct.xaml
     /// </summary>
     public partial class CreateProduct : Window
+
     {
+        public ViewModelTenant viewModelTenant = new ViewModelTenant();  
         public CreateProduct()
         {
             InitializeComponent();
@@ -64,7 +66,7 @@ namespace Reolmarkedet_System.View
         {
            
             
-             ComboBoxTenantFullname.ItemsSource = ViewModel.ViewModelTenant.GetTenantFullnameFromModel();
+             ComboBoxTenantFullname.ItemsSource = viewModelTenant.GetTenantFullnameFromModel();
                     
         } 
 
@@ -73,7 +75,7 @@ namespace Reolmarkedet_System.View
             string connectionString = null;
             string getTenantIDWhereTenantFullname = null;
 
-            connectionString = "Server = (localdb)\\Reolmarkedet; Database=RM_DB";
+            connectionString = "Server = 10.56.8.36; Database = DB_F23_TEAM_02; User ID = DB_F23_TEAM_02; Password = TEAMDB_DB_02; TrustServerCertificate = true";
             getTenantIDWhereTenantFullname = "SELECT TenantId FROM [TENANT] WHERE CONCAT(FirstName, ' ', LastName) = @TenantFullName";
 
             SqlConnection conn = new SqlConnection(connectionString);
@@ -112,7 +114,7 @@ namespace Reolmarkedet_System.View
             string ShowProductGroupNameAndID = null;
             Dictionary<string, int> productGroups = new Dictionary<string, int>();
 
-            connectionString = "Server = (localdb)\\Reolmarkedet; Database=RM_DB";
+            connectionString = "Server = 10.56.8.36; Database = DB_F23_TEAM_02; User ID = DB_F23_TEAM_02; Password = TEAMDB_DB_02; TrustServerCertificate = true";
             ShowProductGroupNameAndID = "SELECT ProductGroupID, ProductGroupName FROM [PRODUCT_GROUP]";
 
             SqlConnection conn = new SqlConnection(connectionString);
@@ -180,7 +182,7 @@ namespace Reolmarkedet_System.View
             string connectionString = null;
             string ShowRackIDAndRackTypeName = null;
 
-            connectionString = "Server=(localdb)\\Reolmarkedet;Database=RM_DB";
+            connectionString = "Server = 10.56.8.36; Database = DB_F23_TEAM_02; User ID = DB_F23_TEAM_02; Password = TEAMDB_DB_02; TrustServerCertificate = true";
             ShowRackIDAndRackTypeName = "SELECT R.RackID, RT.RackTypeName FROM RACK R " +
                    "INNER JOIN Rack_Type RT ON R.Fk1_RackTypeID = RT.RackTypeID " +
                    "WHERE R.Fk2_TenantID = @TenantID";

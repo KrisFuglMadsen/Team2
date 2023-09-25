@@ -10,10 +10,13 @@ namespace Reolmarkedet_System.ViewModel
 {
     public class ViewModelTenant
     {
-        public static List<string> GetTenantFullnameFromModel()
+        private TenantRepo tenantRepo = new TenantRepo();
+
+        public List<string> GetTenantFullnameFromModel()
         {
-            List<string> result = Model.Tenant.GetTenantFullName();
-            return result;
+            //List<string> result = Tenant.GetTenantFullName();
+            return tenantRepo.GetTenantFullName();
+           
         }
     }
 }

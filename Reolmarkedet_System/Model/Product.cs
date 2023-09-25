@@ -26,7 +26,9 @@ namespace Reolmarkedet_System.Model
             string connectionString = null;
             string CreateProduct = null;
 
-            connectionString = "Server = (localdb)\\Reolmarkedet; Database=RM_DB";           
+            //connectionString = "Server=10.56.8.36;Database=DB_F23_TEAM:02;User ID=DB_F23_TEAM_02;Password=TEAMDB_DB_02;\r\n";
+            connectionString= "Server = 10.56.8.36; Database = DB_F23_TEAM_02; User ID = DB_F23_TEAM_02; Password = TEAMDB_DB_02; TrustServerCertificate = true";
+
             CreateProduct = "insert into PRODUCT ([Price],[Description], [Quantity], [FK1_ProductGroupID], [FK2_TenantID], [FK3_RackID]) values(@Price, @Description, @Quantity, @FK1_ProductGroupID, @FK2_TenantID, @FK3_RackID)";
             SqlConnection conn = new SqlConnection(connectionString);
 
