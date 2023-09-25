@@ -65,4 +65,3 @@ namespace Reolmarkedet_System.Model
 
         } //for at sikre lagdeling skal denne metode rykkes til Tenant-class 
     }
-}
