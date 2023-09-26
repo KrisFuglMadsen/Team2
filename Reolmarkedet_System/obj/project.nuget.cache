@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3DU8s77o4e8Z2dWyswBr2Do6++MLYAODJ7ZD+vNWa02+w7NeDTXEdLGDpsHF0JsRPqSwYyx3/giCzO479ANvNA==",
+  "dgSpecHash": "HRE55oqd7SvnIlgqr9hXbxbdBV/kgTftFkTLOK/+UcgUa+Nl+o8JHzXKw6NFgOYc2HwQHjtV+4F1cfyW+kBVIA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Bright\\Source\\Repos\\KrisFuglMadsen\\Team2\\Reolmarkedet_System\\Reolmarkedet_System.csproj",
+  "projectFilePath": "C:\\Users\\Bright\\source\\repos\\KrisFuglMadsen\\Team2\\Reolmarkedet_System\\Reolmarkedet_System.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Bright\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Bright\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

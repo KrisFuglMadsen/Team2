@@ -52,7 +52,7 @@ namespace Reolmarkedet_System.View
             Product product = new Product();
             product.Price = Decimal.Parse(txtProductPrice.Text);
             product.Description = txtProductDescription.Text;
-            product.Quantity = int.Parse(txtProductQuantity.Text);
+            product.InStock = int.Parse(txtProductQuantity.Text);
             product.TenantID = GetTenantID(ComboBoxTenantFullname.Text);
             product.ProductGroupID = GetSelectedProductGroupID();
             product.RackID = GetSelectedRackID();
