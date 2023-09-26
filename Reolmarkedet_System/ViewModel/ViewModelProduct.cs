@@ -11,7 +11,7 @@ namespace Reolmarkedet_System.ViewModel
     {
         public static void insertProduct(Product product) 
         {
-            Model.Product.insertProductInDb(product);
+            Model.ProductRepo.insertProductInDb(product);
    
         }
     }
